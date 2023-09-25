@@ -1,23 +1,15 @@
 import logging
-from pathlib import Path
+import os
 from datetime import datetime
 
+LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+logs_path=os.path.join(os.getcwd(),"logs",LOG_FILE)
+os.makedirs(logs_path,exist_ok=True)
 
-def configure_logging():
-    """
-    Configure the Logging settings for the application
-    """
+LOG_FILE_PATH=os.path.join(logs_path,LOG_FILE)
 
-    LOG_FILE = f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log"
-
-    # log paths
-    logs_path = Path.cwd() / "logs"
-    logs_path.mkdir(parents=True, exist_ok=True)
-
-    LOG_FILE_PATH = logs_path / LOG_FILE
-
-    # configure the logging settings
-
-    logging.basicConfig(filename=LOG_FILE_PATH,
-                        format="[%(asctime)s] %(lineno)d %(name)s - %(levelname)s - %(message)s",
-                        level=logging.INFO)
+logging.basicConfig(
+    filename=LOG_FILE_PATH,
+    format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
+)
