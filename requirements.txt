@@ -6,4 +6,5 @@ plotly
 jupyter
 catboost
 xgboost
+dill
 -e .
