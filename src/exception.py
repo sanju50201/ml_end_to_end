@@ -1,23 +1,22 @@
-import traceback
-import re
+import sys
+
+
+def error_message_detail(error, error_detail: sys):
+	_, _, exc_tb = error_detail.exc_info()
+	file_name = exc_tb.tb_frame.f_code.co_filename
+	error_message = "Error occured in python script name [{0}] line number [{1}] error message[{2}]".format(
+		file_name, exc_tb.tb_lineno, str(error))
+
+	return error_message
 
 
 class CustomException(Exception):
-    def __init__(self, error_message):
-        formatted_traceback = traceback.format_exc()
-        self.error_message = self._error_message_detail(
-            error_message, formatted_traceback)
-        super().__init__(error_message)
+	def __init__(self, error_message, error_detail: sys):
+		super().__init__(error_message)
+		self.error_message = error_message_detail(error_message, error_detail=error_detail)
 
-    @staticmethod
-    def _error_message_detail(error, formatted_traceback: str) -> str:
-        # Using regular expression to extract filename and line number from the traceback
-        match = re.search(r'File "(.+)", line (\d+)', formatted_traceback)
-        if match:
-            file_name, line_number = match.groups()
-            error_message = (f"Error occurred in python script name [{file_name}] "
-                             f"line number [{line_number}] error message[{str(error)}]")
-            return error_message
-        else:
-            # Fallback message if parsing fails
-            return f"Error message: {str(error)}"
+	def __str__(self):
+		return self.error_message
+
+
+
