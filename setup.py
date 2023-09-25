@@ -1,23 +1,27 @@
 from setuptools import find_packages, setup
 from typing import List
-
-
-HYPHEN_E_DOT = "-e ."
+import os
 
 
 def get_requirements(filename: str) -> List[str]:
     '''
     This function will return the list of requirements.
+
+    Args:
+    - filename: str -> Path to Requirements file.
+
+    Returns:
+    - List[str]
+
     '''
-    requirments = []
-    with open(filename) as f:
-        requirments = f.readlines()
-        requirments = [req.replace("\n", "") for req in requirments]
+    if not os.path.exists(filename):
+        raise FileNotFoundError(f"File {filename} not found.")
 
-        if HYPHEN_E_DOT in requirments:
-            requirments.remove(HYPHEN_E_DOT)
+    with open(filename, 'r', encoding="utf-8") as f:
+        requirements = [line.strip()
+                        for line in f if line.strip() and line.strip() != "-e ."]
 
-    return requirments
+        return requirements
 
 
 setup(
