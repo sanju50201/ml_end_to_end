@@ -15,7 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
-notebook
+notebook/
 lib64/
 parts/
 sdist/
@@ -27,6 +27,8 @@ share/python-wheels/
 *.egg
 MANIFEST
 .idea
+.vscode
+catboost_info
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
