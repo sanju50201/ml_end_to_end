@@ -15,7 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
-notebook/
+.notebook/
 lib64/
 parts/
 sdist/
